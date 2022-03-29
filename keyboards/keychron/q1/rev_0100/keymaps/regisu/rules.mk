@@ -1,4 +1,4 @@
-BOOTLOADER = caterina
+BOOTLOADER = dfu-hid
 VIA_ENABLE = yes
 MOUSEKEY_ENABLE = no
 
