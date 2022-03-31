@@ -4,6 +4,9 @@
 *~
 .DS_Store
 
+# my folder
+regisu
+
 # Build artifacts
 .clang_complete
 .build/
