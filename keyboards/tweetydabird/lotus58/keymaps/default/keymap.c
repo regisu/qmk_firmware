@@ -86,11 +86,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                    | Ins  |      | Win |/ Shift /         \ Shift\ | Menu |      |      |
  *                    `---------------------------'           '------'---------------------'
  */
-    CK_ESC, KC_1, KC_2,   KC_3,     KC_4,    KC_5,                             KC_6, KC_7,      KC_8,    KC_9,   KC_0,    KC_BSPC,
+    KC_ESC, KC_1, KC_2,   KC_3,     KC_4,    KC_5,                             KC_6, KC_7,      KC_8,    KC_9,   KC_0,    KC_MINS,
     KC_TAB, KC_Q, KC_W,   KC_E,     KC_R,    KC_T,                             KC_Y, KC_U,      KC_I,    KC_O,   KC_P,    KC_BSLS,
-   CK_DELINS, KC_A, KC_S,   KC_D,     KC_F,    KC_G,                             KC_H, KC_J,      KC_K,    KC_L,   KC_SCLN, KC_QUOT,
-  KC_LSFT, KC_Z, KC_X,   KC_C,     KC_V,    KC_B, KC_RSFT,      KC_BSPC,  KC_N, KC_M,      KC_COMM, KC_DOT, KC_SLSH, OSL(_FUNC),
-    KC_LGUI, KC_LCTL, TT(_NUM), CK_LALT,   CK_LSPC,      CK_RENT, KC_RALT, KC_MINS, TT(_FUNC), TD(MEDIA_SCROLL)
+    CK_DELINS, KC_A, KC_S,   KC_D,    KC_F,    KC_G,                             KC_H, KC_J,      KC_K,    KC_L,   KC_SCLN, KC_QUOT,
+    KC_LSFT, KC_Z, KC_X,   KC_C,     KC_V,    KC_B, OSM(MOD_LSFT),      KC_BSPC,  KC_N, KC_M,      KC_COMM, KC_DOT, KC_SLSH, OSL(_FUNC),
+    KC_LGUI, CK_LALT, TT(_NUM), KC_LCTL,   CK_LSPC,      CK_RENT, KC_RALT, KC_MINS, TT(_FUNC), TD(MEDIA_SCROLL)
 ),
 
 /* LOWER
@@ -109,9 +109,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_NUM] = LAYOUT(
   KC_GRAVE, LALT(KC_1), LALT(KC_2), LALT(KC_3), LALT(KC_4), LALT(KC_5),                         KC_CIRC,    KC_7,    KC_8,    KC_9, XXXXXXX, XXXXXXX,
-  RESET, CK_ALTF1,  CK_ALTF2, CK_ALTF3, CK_ALTF4, KC_LBRC,                        KC_RBRC,    KC_PGDN,    KC_UP,    KC_PGUP, KC_EQL, RESET,
-  XXXXXXX, LALT(KC_1), LALT(KC_2), LALT(KC_3), LALT(KC_4), LSFT(KC_LBRC),                         RSFT(KC_RBRC),    KC_LEFT,    KC_DOWN,    KC_RIGHT, XXXXXXX, XXXXXXX,
-  _______, XXXXXXX, _______,  LSFT(LCTL(KC_C)), LSFT(LCTL(KC_V)),  KC_EQL, _______,       _______, _______, KC_HOME, LSFT(LCTL(KC_PSCR)), KC_END, _______, _______,
+  KC_CAPS, CK_ALTF1,  CK_ALTF2, CK_ALTF3, CK_ALTF4, KC_LBRC,                        KC_RBRC,    KC_PGDN,    KC_UP,    KC_PGUP, KC_EQL, _______,
+  KC_TILDE, LALT(KC_1), LALT(KC_2), LALT(KC_3), LALT(KC_4), S(KC_LBRC),                         S(KC_RBRC),    KC_LEFT,    KC_DOWN,    KC_RIGHT, XXXXXXX, XXXXXXX,
+  _______, XXXXXXX, _______,  S(LCTL(KC_C)), S(LCTL(KC_V)),  KC_EQL, RESET,       RESET, _______, KC_HOME, S(LCTL(KC_PSCR)), KC_END, _______, _______,
                     _______,  _______, _______, _______, _______,       _______, _______, _______, _______, _______
 ),
 /* RAISE
@@ -130,9 +130,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_FUNC] = LAYOUT(
   _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                           KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, KC_F11,
-  RESET, RGB_MODE_FORWARD, RGB_VAI, LSFT(LCTL(KC_E)), _______, LSFT(LCTL(KC_T)),                         _______, _______, _______, LSFT(LCTL(KC_O)), _______, RESET,
-  RGB_TOG, RGB_RMOD, RGB_VAD, _______, _______, _______,                         _______, _______, _______, _______, _______, _______,
-  _______, _______, LSFT(LCTL(KC_X)), _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______, _______,
+  RESET, RGB_MODE_FORWARD, RGB_VAI, S(LCTL(KC_E)), _______, S(LCTL(KC_T)),                         _______, _______, LALT(KC_UP), S(LCTL(KC_O)), _______, _______,
+  RGB_TOG, RGB_RMOD, RGB_VAD, _______, _______, _______,                         _______, LALT(KC_LEFT), LALT(KC_DOWN), LALT(KC_RIGHT), _______, _______,
+  _______, _______, S(LCTL(KC_X)), _______, _______, _______, _______,       RESET, _______, _______, _______, _______, _______, _______,
                     _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
 ),
 /* ADJUST
