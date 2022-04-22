@@ -44,6 +44,13 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [DEL_INS] = ACTION_TAP_DANCE_DOUBLE(KC_DEL, KC_INS),
     [ESC_PIPE] = ACTION_TAP_DANCE_DOUBLE(KC_ESC, KC_NUBS),
 };
+// Kombosy
+const uint16_t PROGMEM test_combo1[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM test_combo2[] = {KC_C, KC_D, COMBO_END};
+combo_t key_combos[COMBO_COUNT] = {
+    COMBO(test_combo1, KC_ENT),
+    COMBO(test_combo2, LCTL(KC_Z)), // keycodes with modifiers are possible too!
+};
 
 #define CK_ESC TD(ESC_PIPE)
 #define CK_LCTRL MT(MOD_LCTL, KC_LEFT)
@@ -88,9 +95,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     KC_ESC, KC_1, KC_2,   KC_3,     KC_4,    KC_5,                             KC_6, KC_7,      KC_8,    KC_9,   KC_0,    KC_MINS,
     KC_TAB, KC_Q, KC_W,   KC_E,     KC_R,    KC_T,                             KC_Y, KC_U,      KC_I,    KC_O,   KC_P,    KC_BSLS,
-    CK_DELINS, KC_A, KC_S,   KC_D,    KC_F,    KC_G,                             KC_H, KC_J,      KC_K,    KC_L,   KC_SCLN, KC_QUOT,
-    KC_LSFT, KC_Z, KC_X,   KC_C,     KC_V,    KC_B, OSM(MOD_LSFT),      KC_BSPC,  KC_N, KC_M,      KC_COMM, KC_DOT, KC_SLSH, OSL(_FUNC),
-    KC_LGUI, CK_LALT, TT(_NUM), KC_LCTL,   CK_LSPC,      CK_RENT, KC_RALT, KC_MINS, TT(_FUNC), TD(MEDIA_SCROLL)
+    KC_DEL, KC_A, KC_S,   KC_D,    KC_F,    KC_G,                             KC_H, KC_J,      KC_K,    KC_L,   KC_SCLN, KC_ENT,
+    KC_LSFT, KC_Z, KC_X,   KC_C,     KC_V,    KC_B, OSM(MOD_LSFT),      OSM(MOD_RSFT),  KC_N, KC_M,      KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
+    KC_LGUI, CK_LALT, TT(_NUM), KC_LCTL,   KC_SPC,      KC_BSPC, KC_RALT, KC_RALT, OSL(_FUNC), TD(MEDIA_SCROLL)
 ),
 
 /* LOWER
@@ -109,9 +116,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_NUM] = LAYOUT(
   KC_GRAVE, LALT(KC_1), LALT(KC_2), LALT(KC_3), LALT(KC_4), LALT(KC_5),                         KC_CIRC,    KC_7,    KC_8,    KC_9, XXXXXXX, XXXXXXX,
-  KC_CAPS, CK_ALTF1,  CK_ALTF2, CK_ALTF3, CK_ALTF4, KC_LBRC,                        KC_RBRC,    KC_PGDN,    KC_UP,    KC_PGUP, KC_EQL, _______,
-  KC_TILDE, LALT(KC_1), LALT(KC_2), LALT(KC_3), LALT(KC_4), S(KC_LBRC),                         S(KC_RBRC),    KC_LEFT,    KC_DOWN,    KC_RIGHT, XXXXXXX, XXXXXXX,
-  _______, XXXXXXX, _______,  S(LCTL(KC_C)), S(LCTL(KC_V)),  KC_EQL, RESET,       RESET, _______, KC_HOME, S(LCTL(KC_PSCR)), KC_END, _______, _______,
+  KC_CAPS, CK_ALTF1,  CK_ALTF2, CK_ALTF3, CK_ALTF4, KC_LBRC,                        KC_RBRC,    KC_HOME,    KC_UP,    KC_END, KC_EQL, _______,
+  KC_TILDE, LALT(KC_1), LALT(KC_2), LALT(KC_3), LALT(KC_4), S(KC_LBRC),                         S(KC_RBRC),    KC_LEFT,    KC_DOWN,    KC_RIGHT, KC_QUOT, XXXXXXX,
+  _______, XXXXXXX, _______,  S(LCTL(KC_C)), S(LCTL(KC_V)),  KC_EQL, RESET,       RESET, _______, KC_PGUP, S(LCTL(KC_PSCR)), KC_PGDN, _______, _______,
                     _______,  _______, _______, _______, _______,       _______, _______, _______, _______, _______
 ),
 /* RAISE

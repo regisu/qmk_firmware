@@ -29,6 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DEVICE_VER   0x0001
 #define MANUFACTURER TweetyDaBird
 #define PRODUCT      Lotus58
+#define COMBO_COUNT 2
 
 // Keyboard Matrix (Rows are doubled)
 #define MATRIX_ROWS 10
