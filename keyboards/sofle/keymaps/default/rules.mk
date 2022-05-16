@@ -1,6 +1,9 @@
 SRC += features/caps_word.c
+EXTRAFLAGS += -flto # wylaczenie debuga
 OLED_ENABLE = yes
 OLED_DRIVER = SSD1306
 ENCODER_ENABLE = yes
 CONSOLE_ENABLE = no
 EXTRAKEY_ENABLE = yes
+BOOTMAGIC_ENABLE = no
+UNICODE_ENABLE = yes

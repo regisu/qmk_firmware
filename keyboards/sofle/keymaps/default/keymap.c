@@ -10,9 +10,16 @@ enum sofle_layers {
     _ADJUST,
 };
 
+// Tap Dance declarations
+enum {
+    TD_TAB_CAPS,
+};
+
+//Custom keycodes
 enum custom_keycodes {
     KC_QWERTY = SAFE_RANGE,
     IPADD,
+    SUDO,
     KC_LOWER,
     KC_RAISE,
     KC_ADJUST,
@@ -21,6 +28,12 @@ enum custom_keycodes {
     KC_LSTRT,
     KC_LEND,
     KC_DLINE
+};
+
+// Tap Dance definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+    // Tap once for Escape, twice for Caps Lock
+    [TD_TAB_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_TAB, KC_CAPS),
 };
 
 #define CK_ESC TD(ESC_PIPE)
@@ -49,11 +62,13 @@ enum custom_keycodes {
 #define OSM_RGUI OSM(MOD_RGUI)
 
   // Kombosy
-const uint16_t PROGMEM test_combo1[] = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM test_combo2[] = {KC_A, KC_I, COMBO_END};
+const uint16_t PROGMEM test_combo1[] = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM test_combo2[] = {KC_ESC, KC_I, COMBO_END};
+const uint16_t PROGMEM test_combo3[] = {KC_ESC, KC_O, COMBO_END};
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(test_combo1, KC_ENT),
     COMBO(test_combo2, IPADD), // keycodes with modifiers are possible too!
+    COMBO(test_combo3, SUDO), // keycodes with modifiers are possible too!
 };
 
 
@@ -76,10 +91,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_QWERTY] = LAYOUT(
   KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_MINS,
-  KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
-  KC_DEL,   KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,  KC_ENT,
-  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,     KC_F3 ,KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
-                 KC_LALT,KC_LGUI,TT(_LOWER), KC_LCTL, KC_SPC,      KC_BSPC,  KC_RALT, KC_RCTRL, KC_RALT, OSL(_RAISE)
+  TD(TD_TAB_CAPS),   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
+  KC_DEL,   KC_A,   KC_S,    KC_D,    LSFT_T(KC_F),    KC_G,                     KC_H,    RSFT_T(KC_J),    KC_K,    KC_L, S(KC_SCLN),  KC_ENT,
+  KC_LSFT,  KC_Z,   RALT_T(KC_X),    KC_C,    KC_V,    KC_B, KC_MUTE,     KC_F3 ,KC_N,    KC_M, KC_COMM,  RALT_T(KC_DOT), KC_SLSH,  KC_RSFT,
+                 KC_LALT,KC_LGUI,TT(_LOWER), KC_LCTL, KC_SPC,      KC_BSPC,  KC_RALT, OSL(_RAISE), S(KC_SCLN), OSL(_RAISE)
 ),
 /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -97,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = LAYOUT(
     KC_GRAVE, LALT(KC_1), LALT(KC_2), LALT(KC_3), LALT(KC_4), LALT(KC_5),                         KC_CIRC,    KC_7,    KC_8,    KC_9, XXXXXXX, XXXXXXX,
-    KC_CAPS, CK_ALTF1,  CK_ALTF2, CK_ALTF3, CK_ALTF4, KC_LBRC,                        KC_RBRC,    KC_HOME,    KC_UP,    KC_END, KC_EQL, _______,
+    LALT(KC_TAB), CK_ALTF1,  CK_ALTF2, CK_ALTF3, CK_ALTF4, KC_LBRC,                        KC_RBRC,    KC_HOME,    KC_UP,    KC_END, KC_EQL, _______,
     KC_TILDE, _______, _______, _______, _______, S(KC_LBRC),                         S(KC_RBRC),    KC_LEFT,    KC_DOWN,    KC_RIGHT, KC_QUOT, XXXXXXX,
     _______, XXXXXXX, _______,  S(LCTL(KC_C)), S(LCTL(KC_V)),  _______, _______,       _______, _______, KC_PGUP, S(LCTL(KC_PSCR)), KC_PGDN, _______, _______,
                       _______,  _______, _______, _______, _______,       _______, _______, _______, _______, _______
@@ -261,6 +276,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                   // when keycode QMKBEST is released
             }
             return false;
+	case SUDO:
+	    if (record->event.pressed) {
+		    // when keycode QMKBEST is presd
+		SEND_STRING("sudo -i" SS_TAP(X_ENTER));
+            } else {
+                  // when keycode QMKBEST is released
+            }
+            return false;
 
         case KC_PRVWD:
             if (record->event.pressed) {
@@ -391,15 +414,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
         if (clockwise) {
-            tap_code(KC_VOLU);
-        } else {
             tap_code(KC_VOLD);
+        } else {
+            tap_code(KC_VOLU);
         }
     } else if (index == 1) {
         if (clockwise) {
-            tap_code(KC_PGDOWN);
+            tap_code16(S(KC_F3));
         } else {
-            tap_code(KC_PGUP);
+            tap_code(KC_F3);
         }
     }
     return true;
