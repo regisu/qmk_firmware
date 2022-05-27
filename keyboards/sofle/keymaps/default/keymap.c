@@ -13,6 +13,7 @@ enum sofle_layers {
 // Tap Dance declarations
 enum {
     TD_TAB_CAPS,
+    TD_COL_SEMICOLON,
 };
 
 //Custom keycodes
@@ -32,8 +33,8 @@ enum custom_keycodes {
 
 // Tap Dance definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
-    // Tap once for Escape, twice for Caps Lock
-    [TD_TAB_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_TAB, KC_CAPS),
+    // Tap once for Tab, twice for Caps Lock
+    [TD_COL_SEMICOLON] = ACTION_TAP_DANCE_DOUBLE(KC_COLN, KC_SCLN),
 };
 
 #define CK_ESC TD(ESC_PIPE)
@@ -61,14 +62,16 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define OSM_RSFT OSM(MOD_RSFT)
 #define OSM_RGUI OSM(MOD_RGUI)
 
-  // Kombosy
-const uint16_t PROGMEM test_combo1[] = {KC_K, KC_L, COMBO_END};
+// Kombosy
+const uint16_t PROGMEM test_combo1[] = {KC_U, KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM test_combo2[] = {KC_ESC, KC_I, COMBO_END};
 const uint16_t PROGMEM test_combo3[] = {KC_ESC, KC_O, COMBO_END};
+const uint16_t PROGMEM caps_combo[] = {KC_ESC, KC_1, COMBO_END};
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(test_combo1, KC_ENT),
     COMBO(test_combo2, IPADD), // keycodes with modifiers are possible too!
     COMBO(test_combo3, SUDO), // keycodes with modifiers are possible too!
+    COMBO(caps_combo, KC_CAPS), // keycodes with modifiers are possible too!
 };
 
 
@@ -91,10 +94,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_QWERTY] = LAYOUT(
   KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_MINS,
-  TD(TD_TAB_CAPS),   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
-  KC_DEL,   KC_A,   KC_S,    KC_D,    LSFT_T(KC_F),    KC_G,                     KC_H,    RSFT_T(KC_J),    KC_K,    KC_L, S(KC_SCLN),  KC_ENT,
-  KC_LSFT,  KC_Z,   RALT_T(KC_X),    KC_C,    KC_V,    KC_B, KC_MUTE,     KC_F3 ,KC_N,    KC_M, KC_COMM,  RALT_T(KC_DOT), KC_SLSH,  KC_RSFT,
-                 KC_LALT,KC_LGUI,TT(_LOWER), KC_LCTL, KC_SPC,      KC_BSPC,  KC_RALT, OSL(_RAISE), S(KC_SCLN), OSL(_RAISE)
+  KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
+  KC_DEL,   KC_A,   KC_S,    KC_D,    LSFT_T(KC_F),    KC_G,                     KC_H,    RSFT_T(KC_J),    KC_K,    KC_L, TD(TD_COL_SEMICOLON),  KC_ENT,
+  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,     KC_F3 ,KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
+                 KC_LGUI,KC_LALT,MO(_LOWER), KC_LCTL, KC_SPC,      KC_BSPC,  KC_RALT, OSL(_RAISE), S(KC_QUOT), OSL(_RAISE)
 ),
 /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -113,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LOWER] = LAYOUT(
     KC_GRAVE, LALT(KC_1), LALT(KC_2), LALT(KC_3), LALT(KC_4), LALT(KC_5),                         KC_CIRC,    KC_7,    KC_8,    KC_9, XXXXXXX, XXXXXXX,
     LALT(KC_TAB), CK_ALTF1,  CK_ALTF2, CK_ALTF3, CK_ALTF4, KC_LBRC,                        KC_RBRC,    KC_HOME,    KC_UP,    KC_END, KC_EQL, _______,
-    KC_TILDE, _______, _______, _______, _______, S(KC_LBRC),                         S(KC_RBRC),    KC_LEFT,    KC_DOWN,    KC_RIGHT, KC_QUOT, XXXXXXX,
+    KC_TILDE, _______, _______, _______, _______, S(KC_LBRC),                         S(KC_RBRC),    KC_LEFT,    KC_DOWN,    KC_RIGHT, KC_QUOT, _______,
     _______, XXXXXXX, _______,  S(LCTL(KC_C)), S(LCTL(KC_V)),  _______, _______,       _______, _______, KC_PGUP, S(LCTL(KC_PSCR)), KC_PGDN, _______, _______,
                       _______,  _______, _______, _______, _______,       _______, _______, _______, _______, _______
   ),
@@ -429,3 +432,4 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 }
 
 #endif
+
